@@ -1,0 +1,100 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Music Player</title>
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="description" content="">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <meta property="og:image:alt" content="">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#fafafa">
+
+  <header>
+
+    <img id="cover" src="icon.png" alt="cover" style="height:100px;width:100px;" > Music Player</img>
+  </header>
+</head>
+
+<body>
+
+  <!-- Add your site or application content here -->
+  
+
+   <aside class="sidebar">
+       
+        <button > <a href="index.html"> &#127968 Home </a> </button >
+        <button > &#128270 Browse </button >
+        <button > &#129655 Favorites </button >
+        <button > &#127911 Library </button >
+   </aside>
+
+
+  <div class="player" id="player">
+    <div class="player-left">
+      <div class="cover">
+        <img id="cover" src="icon.png" alt="cover" />
+      </div>
+      <div class="meta">
+        <div id="title">No track</div>
+        <div id="artist">—</div>
+      </div>
+    </div>
+
+    <div class="player-center">
+      
+
+      <div class="controls">
+        <button id="prev" title="Previous">⏮</button>
+        <button id="play" title="Play" >▶</button>
+        <button id="next" title="Next">⏭</button>
+        
+      </div>
+        <audio id="audio" ></audio>
+
+      <div class="progress">
+        <span id="current">0:00</span>
+        <input type="range" id="seek" value="0" min="0" max="100" step="0.1">
+        <span id="duration"></span>
+      </div>
+
+        <input type="range" id="volumeSlider" min="0" max="100" value="100">
+
+    </div>
+
+    <div class="player-right">
+      <div class="playlist">
+        <h5>Playlist</h5>
+        <ul id="playlist"></ul>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="js/app.js"></script>
+
+</body>
+
+</html>

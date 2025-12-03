@@ -1,0 +1,320 @@
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html {
+  color: #e92828;
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+/*
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+  background: #153c6c;
+  text-shadow: none;
+}
+
+::selection {
+  background: #4490ed;
+  text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #a1a0a0;
+  margin: 1em 0;
+  padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+  resize: vertical;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+body {
+background: #4490ed;
+
+
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+  font-size: 25px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+aside {
+  width: 10%;
+  padding-top: 15px;
+  margin: 20px;
+  float: left;
+  
+}
+.aside button:hover {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-style: italic;
+    
+  }
+
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers
+ */
+
+.hidden,
+[hidden] {
+  display: none !important;
+}
+
+/*
+ * Hide only visually, but have it available for screen readers:
+ * https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ *
+ * 1. For long content, line feeds are not interpreted as spaces and small width
+ *    causes content to wrap 1 word per line:
+ *    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+ */
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  /* 1 */
+}
+
+/*
+ * Extends the .visually-hidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+
+.visually-hidden.focusable:active,
+.visually-hidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  white-space: inherit;
+  width: auto;
+}
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+
+.invisible {
+  visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * The use of `table` rather than `block` is only necessary if using
+ * `::before` to contain the top-margins of child elements.
+ */
+
+.clearfix::before,
+.clearfix::after {
+  content: "";
+  display: table;
+}
+
+.clearfix::after {
+  clear: both;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+  (-webkit-min-device-pixel-ratio: 1.25),
+  (min-resolution: 1.25dppx),
+  (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   https://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: #fefefe !important;
+    color: #000 !important;
+    /* Black prints faster */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]::after {
+    content: " (" attr(title) ")";
+  }
+
+  /*
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: "";
+  }
+
+  pre {
+    white-space: pre-wrap !important;
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
+
+/* ========== Music player styles ========== */
+.player {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 20px;
+  align-items: center;
+  max-width: 900px;
+  margin-top: 20px;
+  margin-left: 100px ;
+  margin-right: 100px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  background: linear-gradient(180deg,#df3a3a,#4e2121);
+}
+
+.player-left { display:flex; align-items:center; gap:12px }
+.cover img { width:72px; height:72px; object-fit:cover; border-radius:6px }
+.meta #title { font-weight:700 }
+.meta #artist { font-size:0.9rem; color:#666 }
+
+.player-center { text-align:center }
+.controls { display:flex; justify-content:center; gap:8px; margin-bottom:10px }
+.controls button { font-size:20px; padding:6px 10px; border-radius:6px; border:0; cursor:pointer; background:#efefef }
+.controls button:hover { background:#e3e3e3 }
+
+.controls button#repeat { font-size:16px }
+.controls button#repeat.active { background:#e7f0ff }
+
+.progress { display:flex; align-items:center; gap:10px }
+.progress input[type=range] { width: 48%; }
+.progress #current, .progress #duration { font-size:0.9rem; color:#222 }
+
+.player-right .playlist { max-height:220px; overflow:auto }
+.player-right ul { list-style:none; padding:0; margin:0 }
+.player-right li { padding:8px 6px; border-bottom:1px solid #eee; cursor:pointer }
+.player-right li:hover { background:#fafafa }
+.player-right li.playing { background:#e7f0ff }
+
+.player-right .volume { display:flex; align-items:center; gap:6px; margin-top:12px }
+.player-right .volume button { padding:6px 8px; font-size:16px; border-radius:6px; border:0; background:#efefef; cursor:pointer }
+.player-right .volume button:hover { background:#e3e3e3 }
+.player-right .volume input[type=range] { width:120px }
+
+@media (max-width:800px){
+  .player { grid-template-columns: 1fr; gap:12px }
+  .progress input[type=range] { width: 60% }
+}
+
+
