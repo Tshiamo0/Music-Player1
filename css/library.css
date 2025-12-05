@@ -1,5 +1,5 @@
 body {
-    background: #4490ed;
+    background: #858b8e;
 
 }
 
@@ -18,17 +18,46 @@ aside {
   padding-top: 15px;
   margin: 20px;
   float: left;
-  
 }
-.aside button:hover {
-    padding: 10px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-style: italic;
-    
-  }
+
+/* Sidebar button styling */
+
+aside button,
+.sidebar-btn {
+  display: block;
+  width: 100%;
+  padding: 12px 10px;
+  margin: 8px 0;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+aside button:hover,
+.sidebar-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-style: italic;
+}
+
+aside button:active,
+.sidebar-btn:active {
+  transform: translateX(3px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-btn.active {
+  background: rgba(46, 204, 113, 0.8);
+  border-color: #2ecc71;
+  box-shadow: 0 0 15px rgba(46, 204, 113, 0.5);
+}
 
 /* Song grid and items styling */
 .song-grid {

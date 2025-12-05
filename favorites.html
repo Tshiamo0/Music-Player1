@@ -1,0 +1,57 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Music Player - Favorites</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/favorites.css">
+  <meta name="description" content="">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <meta property="og:image:alt" content="">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#fafafa">
+
+  <header>
+    <img onclick="document.location='index.html'" id="logo" src="icon.png" alt="logo" style="height:100px;width:100px;" />
+    <span class="site-title">Music Player</span>
+  </header>
+</head>
+
+<body>
+
+  <aside class="sidebar">
+    <button id="btn-home" class="sidebar-btn" onclick="document.location='index.html'">&#127968; Home</button>
+    <button id="btn-browse" class="sidebar-btn" onclick="document.location='index.html'">&#128270; Browse</button>
+    <button id="btn-favs" class="sidebar-btn active" >&#129655; Favorites</button>
+    <button id="btn-library" class="sidebar-btn" onclick="document.location='library.html'">&#127911; Library</button>
+  </aside>
+
+  <!-- Main content -->
+  <main id="main-content">
+    <section id="view-favorites" class="view active">
+      <h2>Favorite Songs</h2>
+      <p id="favorites-description">Your saved favorite songs appear here.</p>
+      
+      <div id="favorites-list" class="song-grid">
+        <!-- Favorite songs will be rendered here -->
+      </div>
+    </section>
+  </main>
+
+  <script src="js/favorites.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+
+</html>
