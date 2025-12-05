@@ -1,0 +1,149 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Music Player - Library</title>
+        <link rel="stylesheet" href="css/library.css" />
+        <script src="js/app.js" defer></script>
+    </head>
+
+        <header>
+            <img id="logo" src="icon.png" alt="logo" style="height:100px;width:100px;" />
+            <span class="site-title">Music Player</span>
+        </header>
+        
+
+    <body>
+
+        <aside class="sidebar">
+            <button id="btn-home" class="sidebar-btn" onclick="document.location='index.html'">&#127968; Home</button>
+            <button id="btn-browse" class="sidebar-btn" onclick="document.location='browse.html'">&#128270; Browse</button>
+            <button id="btn-favs" class="sidebar-btn" onclick="document.location='favorites.html'">&#129655; Favorites</button>
+            <button id="btn-library" class="sidebar-btn active">&#127911; Library</button>
+        </aside>
+
+        <main id="main-content">
+            <section id="view-library" class="view active">
+                <h2>Library</h2>
+                <p>Your local music library.</p>
+                
+                <!-- Upload form -->
+                <form id="upload-form" enctype="multipart/form-data">
+                    <label for="file">Add song:</label>
+                    <input type="file" id="file" name="file" accept="audio/*" required />
+                    <button type="submit">Upload</button>
+                </form>
+                <div id="upload-status" aria-live="polite"></div>
+
+                <!-- Song list from songs folder -->
+                <div id="library-tracks" class="song-grid">
+                    <!-- Songs will be dynamically loaded here -->
+                </div>
+            </section>
+        </main>
+
+    </body>
+    
+    <script>
+    (function(){
+        // Attempt to load songs from /songs folder
+        // Handles both JSON endpoint and HTML directory listings
+        async function loadSongs(){
+            const tracksEl = document.getElementById('library-tracks');
+            tracksEl.innerHTML = 'Loading songs...';
+            
+            try{
+                // Try JSON endpoint first
+                const res = await fetch('/songs', { cache: 'no-store' });
+                if(!res.ok) throw new Error('Failed to fetch songs');
+                
+                const ct = res.headers.get('content-type') || '';
+                let files = [];
+                
+                if(ct.includes('application/json')){
+                    files = await res.json();
+                } else if(ct.includes('text/html')){
+                    // Parse HTML directory listing
+                    const html = await res.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    files = Array.from(doc.querySelectorAll('a'))
+                        .map(a => a.getAttribute('href'))
+                        .filter(h => h && !h.endsWith('/') && !h.startsWith('?'));
+                }
+                
+                if(!Array.isArray(files)) files = [];
+                files = files.map(f => String(f).trim()).filter(f => f && 
+                    /\.(mp3|wav|ogg|m4a|flac|aac)$/i.test(f));
+                files = Array.from(new Set(files)).sort();
+                
+                if(files.length === 0){
+                    tracksEl.innerHTML = '<p>No audio files found in the songs folder.</p>';
+                    return;
+                }
+                
+                tracksEl.innerHTML = '';
+                files.forEach(filename => {
+                    const item = document.createElement('div');
+                    item.className = 'song-item';
+                    
+                    const title = document.createElement('div');
+                    title.className = 'song-title';
+                    title.textContent = decodeURIComponent(filename);
+                    
+                    const audio = document.createElement('audio');
+                    audio.controls = true;
+                    audio.preload = 'metadata';
+                    audio.src = '/songs/' + encodeURIComponent(filename);
+                    
+                    item.appendChild(title);
+                    item.appendChild(audio);
+                    tracksEl.appendChild(item);
+                });
+            }catch(err){
+                tracksEl.innerHTML = '<p>Could not load songs from folder. Make sure songs are in the `/songs` directory and the server exposes them.</p>';
+                console.error('Error loading songs:', err);
+            }
+        }
+        
+        // Handle upload form
+        const uploadForm = document.getElementById('upload-form');
+        if(uploadForm){
+            uploadForm.addEventListener('submit', async function(e){
+                e.preventDefault();
+                const fileInput = document.getElementById('file');
+                const status = document.getElementById('upload-status');
+                
+                if(!fileInput.files.length){
+                    status.textContent = 'Please select a file.';
+                    return;
+                }
+                
+                const fd = new FormData();
+                fd.append('file', fileInput.files[0]);
+                status.textContent = 'Uploading...';
+                
+                try{
+                    const res = await fetch('/upload', { method: 'POST', body: fd });
+                    if(!res.ok) throw new Error('Upload failed');
+                    const data = await res.json();
+                    status.textContent = '✓ ' + (data.message || 'Upload successful!');
+                    fileInput.value = '';
+                    setTimeout(loadSongs, 500);
+                }catch(err){
+                    status.textContent = '✗ Upload error: ' + err.message;
+                    console.error(err);
+                }
+            });
+        }
+        
+        // Load songs on page load
+        loadSongs();
+    })();
+    </script>
+
+<footer>
+    <p>&copy; 2025 Music Player</p>
+</footer>
+
+</html>

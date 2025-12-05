@@ -22,8 +22,8 @@
   <meta name="theme-color" content="#fafafa">
 
   <header>
-
-    <img id="cover" src="icon.png" alt="cover" style="height:100px;width:100px;" > Music Player</img>
+    <img id="logo" src="icon.png" alt="logo" style="height:100px;width:100px;" />
+    <span class="site-title">Music Player</span>
   </header>
 </head>
 
@@ -33,12 +33,13 @@
   
 
    <aside class="sidebar">
-       
-        <button > <a href="index.html"> &#127968 Home </a> </button >
-        <button > &#128270 Browse </button >
-        <button > &#129655 Favorites </button >
-        <button > &#127911 Library </button >
+        <button id="btn-home" class="sidebar-btn active">&#127968; Home</button>
+        <button id="btn-browse" class="sidebar-btn">&#128270; Browse</button>
+        <button id="btn-favs" class="sidebar-btn" onclick="document.location='favorites.html'">&#129655; Favorites</button>
+        <button id="btn-library" class="sidebar-btn" onclick="document.location='library.html'">&#127911; Library</button>
    </aside>
+
+ 
 
 
   <div class="player" id="player">
@@ -63,13 +64,13 @@
       </div>
         <audio id="audio" ></audio>
 
-      <div class="progress">
+      <div class="progress-center">
         <span id="current">0:00</span>
         <input type="range" id="seek" value="0" min="0" max="100" step="0.1">
         <span id="duration"></span>
       </div>
 
-        <input type="range" id="volumeSlider" min="0" max="100" value="100">
+      &#128266; <input type="range" id="volumeSlider" min="0" max="100" value="100">
 
     </div>
 

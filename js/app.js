@@ -18,30 +18,60 @@
     audio.volume = e.target.value / 100;
   });
 
-  // Add tracks to the playlist. You can add more here or generate them dynamically
-  const tracks = [
-    {
-      title: 'Travis Scott - HIGHEST IN THE ROOM',
-      artist: 'Travis Scott',
-      file: 'songs/Travis Scott - HIGHEST IN THE ROOM (Official Music Video).mp3',
-      cover: 'icon.png'
-    },
+  // Fetch tracks from /songs endpoint
+  let tracks = [];
 
-    {
-        title: 'Ed Sheeran - Shape of You',
-        artist: 'Ed Sheeran',
-        file:'songs/Ed Sheeran - Shape of You.mp3',
+  async function loadTracksFromServer() {
+    try {
+      const res = await fetch('/songs', { cache: 'no-store' });
+      if (!res.ok) throw new Error('Failed to fetch songs');
+      
+      const ct = res.headers.get('content-type') || '';
+      let files = [];
+      
+      if (ct.includes('application/json')) {
+        files = await res.json();
+      } else if (ct.includes('text/html')) {
+        const html = await res.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        files = Array.from(doc.querySelectorAll('a'))
+          .map(a => a.getAttribute('href'))
+          .filter(h => h && !h.endsWith('/') && !h.startsWith('?'));
+      }
+      
+      if (!Array.isArray(files)) files = [];
+      files = files
+        .map(f => String(f).trim())
+        .filter(f => f && /\.(mp3|wav|ogg|m4a|flac|aac)$/i.test(f))
+        .sort();
+      
+      // Convert files to track objects
+      tracks = files.map((file, i) => ({
+        title: decodeURIComponent(file),
+        artist: 'Unknown Artist',
+        file: '/songs/' + encodeURIComponent(file),
         cover: 'icon.png'
-    },
-
-    {
-        title:'Luis Fonsi - Despacito ft. Daddy Yankee',
-        artist:'Luis Fonsi',
-        file:'songs/Luis Fonsi - Despacito ft. Daddy Yankee.mp3',
-        cover:'icon.png'
+      }));
+      
+      console.log('Loaded', tracks.length, 'tracks from server');
+      renderPlaylist();
+      loadTrack(0);
+    } catch (err) {
+      console.error('Error loading tracks from server:', err);
+      // Fallback to hardcoded tracks
+      tracks = [
+        {
+          title: 'Sample Track 1',
+          artist: 'Unknown Artist',
+          file: 'songs/sample1.mp3',
+          cover: 'icon.png'
+        }
+      ];
+      renderPlaylist();
+      loadTrack(0);
     }
-
-  ];
+  }
 
   let currentIndex = 0;
   let isPlaying = false;
@@ -161,9 +191,61 @@
     }
   });
 
-  // Initialize
-  renderPlaylist();
-  loadTrack(0);
+  // Sidebar interactivity: switch views and persist selection
+  const sidebarBtns = document.querySelectorAll('.sidebar-btn');
+  const views = document.querySelectorAll('.view');
+
+  function setActiveView(name) {
+    sidebarBtns.forEach(b => b.classList.toggle('active', b.id === `btn-${name}`));
+    views.forEach(v => v.classList.toggle('active', v.id === `view-${name}`));
+    try { localStorage.setItem('activeView', name); } catch (e) { /* ignore */ }
+  }
+
+  sidebarBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const name = btn.id.replace('btn-', '');
+      setActiveView(name);
+    });
+  });
+
+  // restore last view or default to home
+  const savedView = (function(){ try { return localStorage.getItem('activeView') } catch(e){ return null } })() || 'home';
+  setActiveView(savedView);
+
+  // Populate Browse and Library views with songs
+  function renderSongsInView(viewId) {
+    const container = document.getElementById(viewId);
+    if (!container) return;
+    container.innerHTML = '';
+    tracks.forEach((t, i) => {
+      const card = document.createElement('div');
+      card.className = 'song-card';
+      card.innerHTML = `
+        <img class="song-card-cover" src="${t.cover}" alt="${t.title}" />
+        <div class="song-card-title">${t.title}</div>
+        <div class="song-card-artist">${t.artist}</div>
+        <button class="song-card-btn">▶ Play</button>
+      `;
+      card.querySelector('.song-card-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        loadTrack(i);
+        play();
+      });
+      container.appendChild(card);
+    });
+  }
+
+  // render songs in Browse and Library on page load
+  function updateAllViews() {
+    renderSongsInView('browse-songs');
+    renderSongsInView('library-songs');
+  }
+
+  // Initialize: load tracks from server, then render all views
+  loadTracksFromServer().then(() => {
+    updateAllViews();
+  });
+
   // auto preload first track
   audio.preload = 'metadata';
 })();
