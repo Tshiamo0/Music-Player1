@@ -7,7 +7,6 @@ A full-featured web-based music player with song upload, search, favorites, and 
 - **🎵 Music Playback** — Play, pause, next, previous, seek, and volume control
 - **📤 Upload Songs** — Add audio files to the library via the web interface
 - **🔍 Search & Browse** — Filter songs by title or artist in real-time
-- **⭐ Favorites** — Save favorite songs with persistent browser storage
 - **📱 Responsive Design** — Works on desktop and mobile devices
 - **🎨 Clean UI** — Intuitive sidebar navigation and song grids
 
@@ -36,7 +35,6 @@ The app will be available at `http://localhost:3000`
 | **Home** | `http://localhost:3000` | Main player with playlist and playback controls |
 | **Browse** | `http://localhost:3000/index.html` (Browse tab) | Search and filter songs by title/artist |
 | **Library** | `http://localhost:3000/library.html` | Upload new audio files to `songs/` folder |
-| **Favorites** | `http://localhost:3000/favorites.html` | View and manage saved favorite songs |
 
 ## How to Use
 
@@ -66,7 +64,6 @@ The app will be available at `http://localhost:3000`
 1. On any page, click the **★** button on a song to add it to favorites
 2. Click the **☆** button to remove it from favorites
 3. Go to the **Favorites** page to view all saved songs
-4. Click **✕ Remove** to delete from favorites, or **▶ Play** to play
 
 ## Technical Details
 
@@ -75,7 +72,6 @@ The app will be available at `http://localhost:3000`
 new-site/
 ├── index.html              # Home page (player + browse + library inline)
 ├── library.html            # Library page (upload interface)
-├── favorites.html          # Favorites page
 ├── 404.html               # Error page
 ├── server.js              # Express.js backend
 ├── package.json           # Dependencies
@@ -85,7 +81,6 @@ new-site/
 ├── css/
 │   ├── style.css         # Main styles
 │   ├── library.css       # Library page styles
-│   └── favorites.css     # Favorites page styles
 ├── songs/                # Audio files directory
 └── img/                  # Image assets
 ```
@@ -132,9 +127,5 @@ new-site/
 - Verify file extensions are supported (MP3, WAV, OGG, M4A, FLAC, AAC)
 - Refresh the page (Ctrl+R)
 
-**Favorites not showing**
-- Open browser DevTools (F12) and check the Console for errors
-- Verify localStorage is enabled in your browser
-- Clear cache if needed
 
 Enjoy your music! 🎵
