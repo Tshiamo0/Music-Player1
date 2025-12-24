@@ -88,6 +88,12 @@ header {
   box-shadow: 0 3px 10px rgba(0,0,0,0.08);
 }
 
+#logo {
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+}
+
 aside {
   width: 10%;
   padding-top: 15px;
@@ -306,7 +312,7 @@ aside button:active,
 }
 
 .player-left { display:flex; align-items:center; gap:12px }
-.cover img { width:72px; height:72px; object-fit:cover; border-radius:6px }
+.cover img { width:120px; height:120px; object-fit:cover; border-radius:6px }
 .meta #title { font-weight:700 }
 .meta #artist { font-size:0.9rem; color:#666 }
 
@@ -411,7 +417,7 @@ aside button:active,
 /* Song grid */
 .song-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
   margin-top: 20px;
 }
@@ -547,7 +553,7 @@ aside button:active,
   }
 
   .song-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 15px;
   }
 

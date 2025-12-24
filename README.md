@@ -1,22 +1,26 @@
-# Music Player
+# Music Player 🎧
 
-A full-featured web-based music player with song upload, search, favorites, and dynamic playlist management. Built with vanilla JavaScript, Express.js, and localStorage persistence.
+A lightweight web-based music player with file uploads, search, favorites, and a simple Express.js backend. Built with vanilla JavaScript and localStorage for client-side persistence.
 
-## Features
+---
 
-- **🎵 Music Playback** — Play, pause, next, previous, seek, and volume control
-- **📤 Upload Songs** — Add audio files to the library via the web interface
-- **🔍 Search & Browse** — Filter songs by title or artist in real-time
-- **📱 Responsive Design** — Works on desktop and mobile devices
-- **🎨 Clean UI** — Intuitive sidebar navigation and song grids
+## ✅ Key Features
 
-## Getting Started
+- **Playback controls** (play, pause, next, previous, seek, volume)
+- **Upload songs** via the web UI or the `/upload` API endpoint
+- **Real-time search** and browsing by title/artist
+- **Favorites** saved in browser `localStorage`
+- **Responsive UI** for desktop and mobile
+
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js (v14 or later)
+- Node.js (v14+)
 - npm
 
-### Installation & Running
+### Install & Run
 
 ```powershell
 # Install dependencies
@@ -26,106 +30,94 @@ npm install
 npm start
 ```
 
-The app will be available at `http://localhost:3000`
+By default the server serves the app at `http://localhost:3000`.
 
-## Pages Overview
+You can override the port or songs folder with environment variables:
+- `PORT` (default: 3000)
+- `SONGS_DIR` (default: `./songs`)
 
-| Page | URL | Description |
-|------|-----|-------------|
-| **Home** | `http://localhost:3000` | Main player with playlist and playback controls |
-| **Browse** | `http://localhost:3000/index.html` (Browse tab) | Search and filter songs by title/artist |
-| **Library** | `http://localhost:3000/library.html` | Upload new audio files to `songs/` folder |
+Example (PowerShell):
+```powershell
+$env:PORT = 4000; npm start
+```
 
-## How to Use
+---
 
-### 🏠 Home Page
-1. View all available songs in the main playlist
-2. Click on any song to select it
-3. Use the player controls:
-   - **▶ Play** — Start playback
-   - **⏸ Pause** — Pause the current track
-   - **⏭ Next** — Skip to the next song
-   - **⏮ Previous** — Go back to the previous song
-   - **Seek Bar** — Jump to any point in the track
-   - **Volume Slider** — Adjust playback volume
+## 🧪 Tests
 
-### 🔍 Browse
-1. Enter a song title or artist name in the search box
-2. Results filter in real-time
-3. Click **▶ Play** to play a song
-4. Click **★** to add/remove from favorites
+Run the project tests with:
 
-### 📚 Library
-1. Click **Choose File** and select an audio file (MP3, WAV, OGG, M4A, FLAC, AAC)
-2. Click **Upload** to add the song to the `songs/` folder
-3. The song will immediately appear in all views
+```bash
+npm test
+```
 
-### ⭐ Favorites
-1. On any page, click the **★** button on a song to add it to favorites
-2. Click the **☆** button to remove it from favorites
-3. Go to the **Favorites** page to view all saved songs
+Tests are implemented with **Jest** and **supertest** and live in the `test/` folder.
 
-## Technical Details
+---
 
-### Project Structure
+## 📄 API
+
+### GET /api/songs
+Returns a JSON array of filenames for supported audio files found in the `songs/` directory.
+
+Example response:
+
+```json
+["song1.mp3", "song2.flac"]
+```
+
+### POST /upload
+Accepts multipart form uploads (field name: `file`).
+
+- Allowed extensions: **.mp3, .wav, .ogg, .m4a, .flac, .aac**
+- Max file size: **100 MB**
+- Filenames are saved as uploaded (the server currently does not add a unique prefix or sanitize names beyond using the basename)
+
+Example curl upload:
+
+```bash
+curl -v -F "file=@song.mp3" http://localhost:3000/upload
+```
+
+If an upload fails, the server returns a 400 status with a JSON error message.
+
+---
+
+## ⚠️ Important Notes & Security
+
+- Filenames are saved using the uploaded name. Be cautious when accepting uploads from untrusted sources.
+- The server filters by file extension and MIME type but **does not** perform deep content scanning.
+- Consider adding filename sanitization or unique prefixes for production use.
+
+---
+
+## 📁 Project Structure
+
 ```
 new-site/
-├── index.html              # Home page (player + browse + library inline)
-├── library.html            # Library page (upload interface)
-├── 404.html               # Error page
-├── server.js              # Express.js backend
-├── package.json           # Dependencies
+├── index.html
+├── library.html
+├── 404.html
+├── server.js
+├── package.json
 ├── js/
-│   ├── app.js            # Main player logic
-│   └── favorites.js      # Favorites management
 ├── css/
-│   ├── style.css         # Main styles
-│   ├── library.css       # Library page styles
-├── songs/                # Audio files directory
-└── img/                  # Image assets
+├── songs/         # uploaded audio files
+└── test/          # Jest tests
 ```
 
-### Backend API
+---
 
-**GET `/songs`**
-- Returns a JSON array of available audio files
-- Example: `["song1.mp3", "song2.mp3"]`
+## Contributing
 
-**POST `/upload`**
-- Accepts multipart form data with audio file
-- Saves to `songs/` folder
-- Returns upload status
+Contributions are welcome — open an issue or submit a pull request. Please include a clear description of the change and add tests when appropriate.
 
-### Data Storage
+---
 
-- **Server-side** — Audio files stored in `songs/` folder
-- **Client-side** — Favorite songs stored in browser localStorage under key `musicPlayerFavorites`
+## License
 
-## Supported Audio Formats
-- MP3
-- WAV
-- OGG
-- M4A
-- FLAC
-- AAC
+MIT — feel free to use or modify.
 
-## Notes
-
-- Favorites are stored locally in your browser and will persist across sessions
-- To share favorites across devices, export from browser DevTools > Application > LocalStorage
-- The server dynamically scans the `songs/` folder for available tracks
-- No database required — fully serverless on the frontend (except file upload)
-
-## Troubleshooting
-
-**Server won't start**
-- Ensure port 3000 is not in use: `Get-Process -Name node | Stop-Process -Force`
-- Run `npm install` to ensure dependencies are installed
-
-**Songs not appearing**
-- Check that audio files are in the `songs/` folder
-- Verify file extensions are supported (MP3, WAV, OGG, M4A, FLAC, AAC)
-- Refresh the page (Ctrl+R)
-
+---
 
 Enjoy your music! 🎵

@@ -47,7 +47,7 @@
 
   async function loadTracksFromServer() {
     try {
-      const res = await fetch('/songs', { cache: 'no-store' });
+      const res = await fetch('/api/songs', { cache: 'no-store' });
       if (!res.ok) throw new Error('Failed to fetch songs');
       
       const ct = res.headers.get('content-type') || '';

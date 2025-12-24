@@ -13,6 +13,12 @@ header {
   box-shadow: 0 3px 10px rgba(0,0,0,0.08);
 }
 
+#logo {
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+}
+
 aside {
   width: 10%;
   padding-top: 15px;
@@ -163,6 +169,18 @@ aside button:active,
   background: rgba(255, 255, 255, 0.2);
   color: white;
   border-left: 4px solid #2ecc71;
+}
+
+/* success / error states */
+#upload-status.success {
+  background: rgba(46, 204, 113, 0.12);
+  color: #e6ffed;
+  border-left-color: #2ecc71;
+}
+#upload-status.error {
+  background: rgba(231, 76, 60, 0.12);
+  color: #ffdede;
+  border-left-color: #e74c3c;
 }
 
 /* Main content area */
